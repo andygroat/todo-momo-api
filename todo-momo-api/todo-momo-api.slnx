@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Modules/">
+    <Project Path="Modules.Todos/Modules.Todos.csproj" />
+  </Folder>
+  <Project Path="todo-momo-api.common/todo-momo-api.common.csproj" />
+  <Project Path="todo-momo-api/todo-momo-api.csproj" />
+</Solution>
