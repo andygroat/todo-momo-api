@@ -58,9 +58,9 @@ public static class TodoModule
     public static WebApplication MapTodoEndpoints(this WebApplication app)
     {
         app.MapCreateTodoEndpoint();
-        //app.MapGetTodosEndpoint();
-        //app.MapGetTodoByIdEndpoint();
-        //app.MapCompleteTodoEndpoint();
+        app.MapGetTodosEndpoint();
+        app.MapGetTodoByIdEndpoint();
+        app.MapCompleteTodoEndpoint();
 
         return app;
     }
