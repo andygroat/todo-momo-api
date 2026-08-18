@@ -54,7 +54,7 @@ public static class GetTodoById
     /// </summary>
     /// <param name="context">The database context used to query Todo items.</param>
     /// <param name="logger">The logger used to record diagnostic information.</param>
-    internal sealed class Handler(TodoDbContext context, ILogger<Handler> logger)
+    public sealed class Handler(TodoDbContext context, ILogger<Handler> logger)
         : IRequestHandler<Query, Result<Response>>
     {
         public async Task<Result<Response>> Handle(Query request, CancellationToken cancellationToken)

@@ -2,6 +2,13 @@
   <Folder Name="/Modules/">
     <Project Path="Modules.Todos/Modules.Todos.csproj" />
   </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="todo-momo-api.common.tests/todo-momo-api.common.tests.csproj" Id="dd03f8f7-7410-497f-9887-57dec38d4ea7" />
+    <Project Path="todo-momo-api.tests/todo-momo-api.tests.csproj" Id="c4179d24-457f-44f9-8d37-6523bfdf725b" />
+  </Folder>
+  <Folder Name="/Tests/Modules/">
+    <Project Path="Modules.Todos.Tests/Modules.Todos.Tests.csproj" Id="2ff77b73-30b4-4316-b708-990a3a57b7d2" />
+  </Folder>
   <Project Path="todo-momo-api.common/todo-momo-api.common.csproj" />
   <Project Path="todo-momo-api/todo-momo-api.csproj" />
 </Solution>

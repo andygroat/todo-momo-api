@@ -46,7 +46,7 @@ public static class CreateTodo
     /// </summary>
     /// <param name="context">The database context used to interact with the Todo items in the database.</param>
     /// <param name="logger">The logger used to log information about the creation of the Todo item.</param>
-    internal sealed class Handler(TodoDbContext context, ILogger<Handler> logger) : IRequestHandler<Command, Result<Guid>>
+    public sealed class Handler(TodoDbContext context, ILogger<Handler> logger) : IRequestHandler<Command, Result<Guid>>
     {
         /// <summary>
         /// Handles the CreateTodo command by creating a new TodoItem entity based on the request data, adding it to the database context, and saving the changes to the database. The method

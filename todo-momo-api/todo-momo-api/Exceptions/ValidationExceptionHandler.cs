@@ -9,7 +9,7 @@ namespace todo_momo_api.Exceptions;
 /// </summary>
 /// <param name="problemDetailsService">The service used to create and write problem details responses.</param>
 /// <param name="logger">The logger used to log validation exceptions.</param>
-internal sealed class ValidationExceptionHandler(IProblemDetailsService problemDetailsService, ILogger<ValidationExceptionHandler> logger) : IExceptionHandler
+public sealed class ValidationExceptionHandler(IProblemDetailsService problemDetailsService, ILogger<ValidationExceptionHandler> logger) : IExceptionHandler
 {
     /// <inheritdoc/>
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)

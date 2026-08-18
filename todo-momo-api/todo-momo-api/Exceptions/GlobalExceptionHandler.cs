@@ -8,7 +8,7 @@ namespace todo_momo_api.Exceptions;
 /// </summary>
 /// <param name="problemDetailsService">The service used to write problem details to the HTTP response.</param>
 /// <param name="logger">The logger used to log unhandled exceptions.</param>
-internal sealed class GlobalExceptionHandler(IProblemDetailsService problemDetailsService, ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
+public sealed class GlobalExceptionHandler(IProblemDetailsService problemDetailsService, ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
 {
     /// <inheritdoc/>
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
