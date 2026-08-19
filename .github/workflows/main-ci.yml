@@ -21,6 +21,7 @@ permissions:
   # The permissions are set to read-only for the contents of the repo, and read/write for the pull requests.
   # This is required to allow the pipeline to add comments to pull requests.
   contents: read
+  checks: write
   pull-requests: write
 
 # Setup the job steps. This defines the steps that the pipeline will follow
@@ -51,7 +52,15 @@ jobs:
 
       # Run the tests and get the code coverage
       - name: Test
-        run: dotnet test --solution ${{ env.Solution }} --configuration Release --no-build --verbosity normal --coverage --coverage-output-format cobertura --results-directory ./coverage
+        run: dotnet test --solution ${{ env.Solution }} --configuration Release --no-build --verbosity normal --coverage --coverage-output-format cobertura --results-directory ./coverage --logger "trx;LogFileName=test-results.trx" --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.ExcludeByAttribute="GeneratedCodeAttribute"
+
+      - name: Publish test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: .NET Test Results
+          path: '**/*.trx'
+          reporter: dotnet-trx
 
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
@@ -93,17 +102,20 @@ jobs:
         with:
           recreate: true
           path: code-coverage-results.md
-          
-      - name: Upload Test Result Files
+      
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v4
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
+        with:
+          name: dotnet-results-${{ matrix.dotnet-version }}
+          path: TestResults-${{ matrix.dotnet-version }}
+
+      - name: Publish
+        run: dotnet publish -c Release -o ${{ env.DOTNET_ROOT }}/todo-momo-api/todo-momo-api todo-momo-api/todo-momo-api.csproj
+
+      - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: ${{ github.workspace }}/**/TestResults/**/*
-          retention-days: 5
-      
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2.16.1
-        if: always()
-        with:
-          trx_files: "${{ github.workspace }}/**/*.trx"
-      
+          name: .net-app
+          path: ${{ env.DOTNET_ROOT }}/todo-momo-api/todo-momo-api
