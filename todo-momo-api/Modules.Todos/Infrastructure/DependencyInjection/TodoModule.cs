@@ -6,9 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Modules.Todos.Features;
 using Modules.Todos.Infrastructure.Database;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 using todo_momo_api.common.Behaviours;
 
 namespace Modules.Todos.Infrastructure.DependencyInjection;
@@ -16,6 +14,7 @@ namespace Modules.Todos.Infrastructure.DependencyInjection;
 /// <summary>
 /// Represents the Todo module and provides methods to register its services with the dependency injection container.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class TodoModule
 {
     /// <summary>

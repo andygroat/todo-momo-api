@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Modules.Todos.Domain;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Modules.Todos.Infrastructure.Database;
 
+[ExcludeFromCodeCoverage]
 public sealed class TodoDbContext(DbContextOptions<TodoDbContext> options) : DbContext(options)
 {
     /// <summary>

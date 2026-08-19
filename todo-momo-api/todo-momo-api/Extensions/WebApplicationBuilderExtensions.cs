@@ -1,9 +1,11 @@
 ﻿using Modules.Todos.Infrastructure.DependencyInjection;
 using Serilog;
+using System.Diagnostics.CodeAnalysis;
 using todo_momo_api.Exceptions;
 
 namespace todo_momo_api.Extensions;
 
+[ExcludeFromCodeCoverage]
 internal static class WebApplicationBuilderExtensions
 {
     /// <summary>

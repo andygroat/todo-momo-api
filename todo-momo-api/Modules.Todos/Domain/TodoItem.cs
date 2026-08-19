@@ -1,6 +1,7 @@
 ﻿using Modules.Todos.Infrastructure.Database;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using todo_momo_api.common.Domain;
 
 namespace Modules.Todos.Domain;
@@ -8,6 +9,7 @@ namespace Modules.Todos.Domain;
 /// <summary>
 /// Represents a to-do item in the application.
 /// </summary>
+[ExcludeFromCodeCoverage]
 [Table("TodoItems", Schema = Schemas.Default)]
 public sealed class TodoItem : BusinessObject
 {

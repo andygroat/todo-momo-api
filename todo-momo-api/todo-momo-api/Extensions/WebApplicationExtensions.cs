@@ -1,8 +1,10 @@
 ﻿using Modules.Todos.Infrastructure.DependencyInjection;
 using Scalar.AspNetCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace todo_momo_api.Extensions;
 
+[ExcludeFromCodeCoverage]
 internal static class WebApplicationExtensions
 {
     /// <summary>
