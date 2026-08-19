@@ -112,10 +112,10 @@ jobs:
           path: TestResults-${{ matrix.dotnet-version }}
 
       - name: Publish
-        run: dotnet publish -c Release -o ${{ env.DOTNET_ROOT }}/todo-momo-api/todo-momo-api todo-momo-api/todo-momo-api.csproj
+        run: dotnet publish -c Release -o ${{ env.DOTNET_ROOT }}/todo-momo-api
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{ env.DOTNET_ROOT }}/todo-momo-api/todo-momo-api
+          path: ${{ env.DOTNET_ROOT }}/todo-momo-api
