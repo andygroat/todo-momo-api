@@ -18,6 +18,13 @@ env:
 
 # Setup the job steps. This defines the steps that the pipeline will follow
 jobs:
+  permissions:
+    # Setup the permissions for the pipeline, this is required to allow the pipeline to run and access the repo.
+    # The permissions are set to read-only for the contents of the repo, and read/write for the pull requests.
+    # This is required to allow the pipeline to add comments to pull requests.
+    contents: read
+    pull-requests: write
+
   build:
     # Specify the server/agent that the pipeline will run on
     runs-on: ubuntu-latest
