@@ -14,6 +14,7 @@ on:
 # Declare environment variables for use throughout the pipeline
 env:
   DotNetVersion: 10.x
+  Solution: todo-momo-api/todo-momo-api.slx
 
 # Setup the job steps. This defines the steps that the pipeline will follow
 jobs:
@@ -35,15 +36,15 @@ jobs:
 
       # Restore the dependencies for the project
       - name: Restore Dependencies
-        run: dotnet restore
+        run: dotnet restore ${{ env.Solution }}
 
       # Build the solution
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ${{ env.Solution }} --configuration Release --no-restore
 
       # Run the tests and get the code coverage
       - name: Test
-        run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+        run: dotnet test ${{ env.Solution }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
 
       # Create the code coverage report
       - name: Code Coverage Report
