@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace todo_momo_api.common.ResultHelper;
 
 /// <summary>
 /// Represents the result of an operation, indicating success or failure and providing an associated error if applicable.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class Result
 {
     /// <summary>
@@ -81,6 +79,7 @@ public class Result
 /// <param name="value">The value returned by the operation.</param>
 /// <param name="isSuccess">Indicates whether the operation was successful.</param>
 /// <param name="error">The error associated with the failure.</param>
+[ExcludeFromCodeCoverage]
 public class Result<T>(T? value, bool isSuccess, Error error) : Result(isSuccess, error)
 {
     /// <summary>

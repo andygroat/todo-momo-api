@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using todo_momo_api.common.Constants;
 
 namespace todo_momo_api.common.Domain;
@@ -7,6 +8,7 @@ namespace todo_momo_api.common.Domain;
 /// Base business object class to provide the base properties that all
 /// business objects should have.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public abstract class BusinessObject
 {
     /// <summary>
