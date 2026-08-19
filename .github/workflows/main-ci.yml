@@ -14,7 +14,7 @@ on:
 # Declare environment variables for use throughout the pipeline
 env:
   DotNetVersion: 10.x
-  Solution: todo-momo-api/todo-momo-api.slx
+  Solution: todo-momo-api/todo-momo-api.slnx
 
 # Setup the job steps. This defines the steps that the pipeline will follow
 jobs:
