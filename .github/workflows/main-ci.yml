@@ -39,7 +39,7 @@ jobs:
 
       # Setup the DotNet environment on the agent
       - name: Setup DotNet
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: ${{ env.DotNetVersion }}
 
@@ -79,7 +79,7 @@ jobs:
 
       # Upload the combined coverage report as an artifact
       - name: Upload Combined Coverage XML
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage
           path: ${{ github.workspace }}/Cobertura.xml
@@ -113,7 +113,7 @@ jobs:
 
       # Upload the published project as an artifact for deployment
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: .net-app
           path: ./todo-momo-api/todo-momo-api/bin/Release/net10.0
