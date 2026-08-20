@@ -15,6 +15,7 @@ on:
 env:
   DotNetVersion: 10.x
   Solution: todo-momo-api/todo-momo-api.slnx
+  WebProject: todo-momo-api/todo-momo-api.Web/todo-momo-api.csproj
 
 permissions:
   # Setup the permissions for the pipeline, this is required to allow the pipeline to run and access the repo.
@@ -112,7 +113,7 @@ jobs:
           path: TestResults-${{ matrix.dotnet-version }}
 
       - name: Publish
-        run: dotnet publish -c Release --property:PublishDir='./todo-momo-api'
+        run: dotnet publish ${{ env.WebProject }} -c Release --property:PublishDir='./todo-momo-api'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
