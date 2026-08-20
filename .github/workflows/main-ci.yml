@@ -15,7 +15,7 @@ on:
 env:
   DotNetVersion: 10.x
   Solution: todo-momo-api/todo-momo-api.slnx
-  WebProject: todo-momo-api/todo-momo-api.Web/todo-momo-api.csproj
+  WebProject: todo-momo-api/todo-momo-api/todo-momo-api.csproj
 
 permissions:
   # Setup the permissions for the pipeline, this is required to allow the pipeline to run and access the repo.
