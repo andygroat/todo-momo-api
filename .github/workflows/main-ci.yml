@@ -119,4 +119,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ./todo-momo-api
+          path: ./todo-momo-api/todo-momo-api/bin/Release/net10.0
