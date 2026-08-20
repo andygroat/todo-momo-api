@@ -52,7 +52,7 @@ jobs:
 
       # Run the tests and get the code coverage
       - name: Test
-        run: dotnet test --solution ${{ env.Solution }} --configuration Release --no-build --verbosity normal --coverage --coverage-output-format cobertura --results-directory ./coverage --report-trx --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.ExcludeByAttribute=GeneratedCodeAttribute
+        run: dotnet test --solution ${{ env.Solution }} --configuration Release --no-build --verbosity normal --coverage --coverage-output-format cobertura --results-directory ./coverage --report-trx
 
       - name: Publish test results
         uses: dorny/test-reporter@v1
