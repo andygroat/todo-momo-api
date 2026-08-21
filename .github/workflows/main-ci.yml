@@ -58,7 +58,6 @@ jobs:
           --configuration Release --no-build --verbosity normal
           --coverage
           --coverage-output-format cobertura
-          --coverage-settings ${{ github.workspace }}/codecoverage.config.xml
           --results-directory ./coverage
           --report-trx
 
