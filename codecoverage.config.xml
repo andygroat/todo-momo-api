@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeCoverage>
+
+  <!-- Exclude anything decorated with these attributes (covers Roslyn/OpenAPI/EF generated code) -->
+  <Attributes>
+    <Exclude>
+      <Attribute>^System\.CodeDom\.Compiler\.GeneratedCodeAttribute$</Attribute>
+      <Attribute>^System\.Diagnostics\.CodeAnalysis\.ExcludeFromCodeCoverageAttribute$</Attribute>
+      <Attribute>^System\.Runtime\.CompilerServices\.CompilerGeneratedAttribute$</Attribute>
+    </Exclude>
+  </Attributes>
+
+  <!-- Exclude generated source files by path/name -->
+  <Sources>
+    <Exclude>
+      <Source>.*\\obj\\.*</Source>
+      <!-- source generators emit here -->
+      <Source>.*\.g\.cs$</Source>
+      <!-- *.g.cs generated files -->
+      <Source>.*\.g\.i\.cs$</Source>
+      <Source>.*\.Designer\.cs$</Source>
+      <Source>.*[\\/]Migrations[\\/].*</Source>
+      <!-- EF Core migrations -->
+    </Exclude>
+  </Sources>
+
+  <!-- Optional: exclude whole modules/namespaces (e.g. OpenAPI generated client) -->
+  <ModulePaths>
+    <Exclude>
+      <ModulePath>.*\.OpenApi\.Generated\.dll$</ModulePath>
+    </Exclude>
+  </ModulePaths>
+
+  <Functions>
+    <Exclude>
+      <Function>^.*\.OpenApi\..*</Function>
+    </Exclude>
+  </Functions>
+
+</CodeCoverage>

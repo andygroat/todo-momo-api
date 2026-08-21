@@ -3,7 +3,7 @@
     <Project Path="Modules.Todos/Modules.Todos.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
-    <File Path="CodeCoverage.runsettings" />
+    <File Path=".runsettings" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="todo-momo-api.common.tests/todo-momo-api.common.tests.csproj" Id="dd03f8f7-7410-497f-9887-57dec38d4ea7" />
