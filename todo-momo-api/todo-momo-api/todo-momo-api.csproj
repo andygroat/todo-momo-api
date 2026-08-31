@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Modules.ShoppingLists\Modules.ShoppingLists.csproj" />
     <ProjectReference Include="..\Modules.Todos\Modules.Todos.csproj" />
   </ItemGroup>
 

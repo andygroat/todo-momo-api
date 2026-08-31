@@ -1,4 +1,5 @@
-﻿using Modules.Todos.Infrastructure.DependencyInjection;
+﻿using Modules.ShoppingLists.Infrastructure.DependencyInjection;
+using Modules.Todos.Infrastructure.DependencyInjection;
 using Serilog;
 using System.Diagnostics.CodeAnalysis;
 using todo_momo_api.Exceptions;
@@ -47,6 +48,9 @@ internal static class WebApplicationBuilderExtensions
     {
         // Add the Todo module services to the WebApplicationBuilder. This method registers the necessary services, configurations, and dependencies required for the Todo module to function properly within the application.
         builder.Services.AddTodoModule(builder.Configuration);
+
+        // Add the ShoppingLists module services to the WebApplicationBuilder.
+        builder.Services.AddShoppingListsModule(builder.Configuration);
 
         return builder;
     }

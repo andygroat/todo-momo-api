@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/Modules/">
-    <Project Path="Modules.Todos/Modules.Todos.csproj" />
+    <Project Path="Modules.ShoppingLists/Modules.ShoppingLists.csproj" />`r`n    <Project Path="Modules.Todos/Modules.Todos.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".runsettings" />
@@ -10,7 +10,7 @@
     <Project Path="todo-momo-api.tests/todo-momo-api.tests.csproj" Id="c4179d24-457f-44f9-8d37-6523bfdf725b" />
   </Folder>
   <Folder Name="/Tests/Modules/">
-    <Project Path="Modules.Todos.Tests/Modules.Todos.Tests.csproj" Id="2ff77b73-30b4-4316-b708-990a3a57b7d2" />
+    <Project Path="Modules.ShoppingLists.Tests/Modules.ShoppingLists.Tests.csproj" />`r`n    <Project Path="Modules.Todos.Tests/Modules.Todos.Tests.csproj" Id="2ff77b73-30b4-4316-b708-990a3a57b7d2" />
   </Folder>
   <Project Path="todo-momo-api.common/todo-momo-api.common.csproj" />
   <Project Path="todo-momo-api/todo-momo-api.csproj" />

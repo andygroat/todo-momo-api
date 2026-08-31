@@ -1,4 +1,5 @@
-﻿using Modules.Todos.Infrastructure.DependencyInjection;
+﻿using Modules.ShoppingLists.Infrastructure.DependencyInjection;
+using Modules.Todos.Infrastructure.DependencyInjection;
 using Scalar.AspNetCore;
 using System.Diagnostics.CodeAnalysis;
 
@@ -47,6 +48,7 @@ internal static class WebApplicationExtensions
     private static WebApplication MapModuleEndpoints(this WebApplication app) 
     {
         app.MapTodoEndpoints();
+        app.MapShoppingListsEndpoints();
 
         return app;
     }
