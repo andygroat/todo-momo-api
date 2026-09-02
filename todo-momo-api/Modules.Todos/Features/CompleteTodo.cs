@@ -24,7 +24,17 @@ public static class CompleteTodo
     /// Implements <see cref="IRequest{TResponse}"/> so it can be dispatched via MediatR.
     /// </summary>
     /// <param name="Id">The unique identifier of the Todo item to complete.</param>
-    public record Command(Guid Id) : IRequest<Result<Guid>>;
+    public record Command(Guid Id) : IRequest<Result<Response>>;
+
+    /// <summary>
+    /// Response DTO returned for a single Todo item. Kept local to the slice to decouple
+    /// the API contract from the underlying domain entity.
+    /// </summary>
+    /// <param name="Id">The unique identifier of the Todo item.</param>
+    /// <param name="Description">The description of the Todo item.</param>
+    /// <param name="DueDate">The due date of the Todo item, if any.</param>
+    /// <param name="IsCompleted">Whether the Todo item has been completed.</param>
+    public record Response(Guid Id, string Description, DateTime? DueDate, bool IsCompleted);
 
     /// <summary>
     /// Validator for the <see cref="Command"/>. Ensures the supplied Id is not the empty Guid.
@@ -45,10 +55,9 @@ public static class CompleteTodo
     /// </summary>
     /// <param name="context">The database context used to interact with Todo items.</param>
     /// <param name="logger">The logger used to record diagnostic information.</param>
-    public sealed class Handler(TodoDbContext context, ILogger<Handler> logger)
-        : IRequestHandler<Command, Result<Guid>>
+    public sealed class Handler(TodoDbContext context, ILogger<Handler> logger) : IRequestHandler<Command, Result<Response>>
     {
-        public async Task<Result<Guid>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Response>> Handle(Command request, CancellationToken cancellationToken)
         {
             // Load the tracked TodoItem so we can mutate and persist changes.
             var todoItem = await context.TodoItems
@@ -57,7 +66,7 @@ public static class CompleteTodo
             if (todoItem is null)
             {
                 logger.LogInformation("TodoItem {TodoItemId} was not found", request.Id);
-                return Result.Failure<Guid>(new Error(
+                return Result.Failure<Response>(new Error(
                     "TodoItem.NotFound",
                     $"TodoItem with Id '{request.Id}' was not found."));
             }
@@ -65,7 +74,7 @@ public static class CompleteTodo
             if (todoItem.IsCompleted)
             {
                 logger.LogInformation("TodoItem {TodoItemId} is already completed", request.Id);
-                return Result.Failure<Guid>(new Error(
+                return Result.Failure<Response>(new Error(
                     "TodoItem.AlreadyCompleted",
                     $"TodoItem with Id '{request.Id}' is already completed."));
             }
@@ -80,7 +89,7 @@ public static class CompleteTodo
                 "Completed TodoItem {TodoItemId} at {TodoItemCompletedDate}",
                 todoItem.Id, todoItem.CompletedDate);
 
-            return Result<Guid>.Success(todoItem.Id);
+            return Result<Response>.Success(new Response(todoItem.Id, todoItem.Description, todoItem.DueDate, todoItem.IsCompleted));
         }
     }
 
@@ -90,14 +99,12 @@ public static class CompleteTodo
     /// <param name="app">The WebApplication instance used to map the endpoint.</param>
     public static WebApplication MapCompleteTodoEndpoint(this WebApplication app)
     {
-        app.MapPost("/api/todos/{id:guid}/complete", async (Guid id, IMediator mediator, CancellationToken cancellationToken) =>
+        app.MapPatch("/api/todos/{id:guid}/complete", async (Guid id, IMediator mediator, CancellationToken cancellationToken) =>
         {
-            Result<Guid> result = await mediator.Send(new Command(id), cancellationToken);
+            Result<Response> result = await mediator.Send(new Command(id), cancellationToken);
 
             if (result.IsSuccess)
-            {
-                return Results.NoContent();
-            }
+                return Results.Ok(result.Value);
 
             return result.Error.Code == "TodoItem.NotFound"
                 ? Results.NotFound(new { error = result.Error })

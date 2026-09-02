@@ -23,12 +23,18 @@ try
     // Add application building blocks
     builder.AddApplicationBuilingBlocks();
 
+    // Add CORS policies to the application to allow cross-origin requests.
+    builder.AddCorsPolicies();
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
     app.MapWebApplication();
 
     app.UseHttpsRedirection();
+
+    // Configure CORS for the application to allow cross-origin requests.
+    app.ConfigureCors();
 
     app.UseAuthorization();
 

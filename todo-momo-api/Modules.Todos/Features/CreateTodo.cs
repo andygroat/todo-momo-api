@@ -23,14 +23,24 @@ public static class CreateTodo
     /// </summary>
     /// <param name="Description">The description of the Todo item.</param>
     /// <param name="DueDate">The due date of the Todo item.</param>
-    public record Command(string Description, DateTime? DueDate) : IRequest<Result<Guid>>;
+    public record CreateTodoCommand(string Description, DateTime? DueDate) : IRequest<Result<Response>>;
+
+    /// <summary>
+    /// Response DTO returned for a single Todo item. Kept local to the slice to decouple
+    /// the API contract from the underlying domain entity.
+    /// </summary>
+    /// <param name="Id">The unique identifier of the Todo item.</param>
+    /// <param name="Description">The description of the Todo item.</param>
+    /// <param name="DueDate">The due date of the Todo item, if any.</param>
+    /// <param name="IsCompleted">Whether the Todo item has been completed.</param>
+    public record Response(Guid Id, string Description, DateTime? DueDate, bool IsCompleted);
 
     /// <summary>
     /// Validator class for validating the CreateTodo command. This class inherits from AbstractValidator provided by FluentValidation and defines validation rules for the command's 
     /// properties, ensuring that the description is not empty and has a maximum length of 100 characters, and that the due date is greater than or equal to today's date if it is 
     /// provided.
     /// </summary>
-    public sealed class Validator : AbstractValidator<Command>
+    public sealed class Validator : AbstractValidator<CreateTodoCommand>
     {
         public Validator()
         {
@@ -46,7 +56,7 @@ public static class CreateTodo
     /// </summary>
     /// <param name="context">The database context used to interact with the Todo items in the database.</param>
     /// <param name="logger">The logger used to log information about the creation of the Todo item.</param>
-    public sealed class Handler(TodoDbContext context, ILogger<Handler> logger) : IRequestHandler<Command, Result<Guid>>
+    public sealed class Handler(TodoDbContext context, ILogger<Handler> logger) : IRequestHandler<CreateTodoCommand, Result<Response>>
     {
         /// <summary>
         /// Handles the CreateTodo command by creating a new TodoItem entity based on the request data, adding it to the database context, and saving the changes to the database. The method
@@ -55,7 +65,7 @@ public static class CreateTodo
         /// <param name="request">The CreateTodo command containing the data for the new Todo item.</param>
         /// <param name="cancellationToken">A cancellation token for cancelling the operation.</param>
         /// <returns>A Result containing the ID of the newly created Todo item.</returns>
-        public async Task<Result<Guid>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Response>> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
         {
             // Create the new TodoItem entity based on the request data
             var todoItem = new TodoItem
@@ -74,7 +84,7 @@ public static class CreateTodo
                 "Created TodoItem {TodoItemId}: {TodoItemDescription}",
                 todoItem.Id, todoItem.Description);
 
-            return Result<Guid>.Success(todoItem.Id);
+            return Result<Response>.Success(new Response(todoItem.Id, todoItem.Description, todoItem.DueDate, todoItem.IsCompleted));
         }
     }
 
@@ -86,14 +96,14 @@ public static class CreateTodo
     public static WebApplication MapCreateTodoEndpoint(this WebApplication app)
     {
         // Map the HTTP POST endpoint for creating a new Todo item
-        app.MapPost("/api/todos", async (Command command, IMediator mediator, CancellationToken cancellationToken) =>
+        app.MapPost("/api/todos", async (CreateTodoCommand command, IMediator mediator, CancellationToken cancellationToken) =>
         {
             // Send the command to the MediatR handler and await the result
-            Result<Guid> result = await mediator.Send(command, cancellationToken);
+            Result<Response> result = await mediator.Send(command, cancellationToken);
 
             // Return the appropriate HTTP response based on the result of the operation
             return result.IsSuccess
-                ? Results.Created($"/api/todos/{result.Value}", new { id = result.Value })
+                ? Results.Created($"/api/todos/{result.Value.Id}", result.Value)
                 : Results.BadRequest(new { error = result.Error });
         })
         .WithName("CreateTodo")

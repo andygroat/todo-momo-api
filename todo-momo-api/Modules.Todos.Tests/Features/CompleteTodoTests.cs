@@ -51,7 +51,11 @@ public class CompleteTodoTests
 
         // Assert
         await Assert.That(result.IsSuccess).IsTrue();
-        await Assert.That(result.Value).IsEqualTo(todo.Id);
+        await Assert.That(result.Value).IsNotNull();
+        await Assert.That(result.Value.Id).IsEqualTo(todo.Id);
+        await Assert.That(result.Value.Description).IsEqualTo(todo.Description);
+        await Assert.That(result.Value.DueDate).IsEqualTo(todo.DueDate);
+        await Assert.That(result.Value.IsCompleted).IsTrue();
 
         var updated = await context.TodoItems.SingleAsync(t => t.Id == todo.Id);
         await Assert.That(updated.IsCompleted).IsTrue();
