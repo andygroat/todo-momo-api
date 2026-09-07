@@ -28,6 +28,9 @@ try
 
     var app = builder.Build();
 
+    // Add exception handling middleware to the application, this is required for the custom exception handlers to work properly.
+    app.UseExceptionHandler();
+
     // Configure the HTTP request pipeline.
     app.MapWebApplication();
 
@@ -37,9 +40,6 @@ try
     app.ConfigureCors();
 
     app.UseAuthorization();
-
-    // Add exception handling middleware to the application, this is required for the custom exception handlers to work properly.
-    app.UseExceptionHandler();
 
     app.Run();
 }
